@@ -1,11 +1,14 @@
+import { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
+import { Route, Routes } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { Route, Routes } from "react-router-dom";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 import "./App.css";
 import {
   addProduct,
@@ -30,7 +33,6 @@ function App() {
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
-  // const navigate = useNavigate();
   const { reset } = useForm();
 
   useEffect(() => {
@@ -39,7 +41,7 @@ function App() {
         const data = await getAllProducts();
         setProducts(data);
       } catch (error) {
-        console.log("🚀 ~ error:", error);
+        console.error("Error fetching products:", error);
       }
     })();
   }, []);
@@ -56,14 +58,13 @@ function App() {
     reset();
   };
 
-  const handleAdd = async (data: any) => {
+  const handleAdd = async (data: Product) => {
     try {
-      await addProduct(data);
-      setProducts([...products, data]);
-      alert("Thêm thành công");
+      const newProduct = await addProduct(data);
+      setProducts([...products, newProduct]);
       handleClose();
     } catch (error) {
-      console.log("🚀 ~ handleAdd ~ error:", error);
+      console.error("Error adding product:", error);
     }
   };
 
@@ -71,10 +72,9 @@ function App() {
     try {
       await updateProduct(data);
       setProducts(products.map((item) => (item.id === data.id ? data : item)));
-      alert("Sửa thành công");
       handleClose();
     } catch (error) {
-      console.log("🚀 ~ handleEdit ~ error:", error);
+      console.error("Error editing product:", error);
     }
   };
 
@@ -84,15 +84,15 @@ function App() {
       if (confirm) {
         await deleteProduct(id);
         setProducts(products.filter((product) => product.id !== id));
-        alert("Xóa thành công");
       }
     } catch (error) {
-      console.log("🚀 ~ handleRemove ~ error:", error);
+      console.error("Error removing product:", error);
     }
   };
 
   return (
     <>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<Page />}>
           <Route index element={<HomePage />} />
@@ -117,9 +117,7 @@ function App() {
       </Routes>
 
       <Dialog open={open} onClose={handleClose} maxWidth="lg" fullWidth>
-        <DialogTitle>
-          {isEditing ? "Sửa sản phẩm" : "Thêm sản phẩm"}
-        </DialogTitle>
+        <DialogTitle>{isEditing ? "Sửa sản phẩm" : "Thêm sản phẩm"}</DialogTitle>
         <DialogContent>
           {isEditing ? (
             <EditProduct onEdit={handleEdit} product={currentProduct} />

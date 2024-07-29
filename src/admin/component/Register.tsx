@@ -10,7 +10,6 @@ const Register = () => {
         "http://localhost:3000/users/register",
         formData
       );
-      alert("đăng ký thành công");
     } catch (error) {
       console.log("🚀 ~ onSubmit ~ error:", error);
     }

@@ -1,146 +1,111 @@
 {
-  "products": [
-    {
-      "name": "BỘ PC MEOW (I5 13500 / RAM 16G DDR5 / VGA RTX 4060 8G)",
-      "image": "https://nguyencongpc.vn/media/product/250-25984-pc-meo.jpg",
-      "desc": "Bộ PC Meow của hãng C",
-      "price": "5687658",
-      "id": 1
-    },
-    {
-      "name": "Màn Hình Gaming AOC 27G4/74 (Fast IPS, 27 Inch, 180Hz, FHD)",
-      "image": "https://nguyencongpc.vn/media/product/250-26469-27g2z_f.png",
-      "desc": "GIỚI THIỆU MÀN HÌNH GAMING",
-      "price": "132413412",
-      "id": 2
-    },
-    {
-      "name": "san pham 3",
-      "image": "https://nguyencongpc.vn/media/product/18453-g560g560.jpg",
-      "desc": "dvsdvfdb",
-      "price": "40000004",
-      "id": 4
-    },
-    {
-      "name": "san pham 2",
-      "image": "https://nguyencongpc.vn/media/product/250-22833-vh310-ruhfur.jpg",
-      "desc": "dưgiouehgjesgr",
-      "price": "5000000",
-      "id": 6
-    },
-    {
-      "name": "san pham 1",
-      "image": "https://nguyencongpc.vn/media/product/18453-g560g560.jpg",
-      "desc": "dưgiouehgjesgr",
-      "price": "200",
-      "id": 7
-    }
-  ],
   "categories": [
     {
       "id": 1,
-      "name": "Beleuchtung",
-      "image": "/images/c1.png",
-      "quantity": 30
+      "name": "PC"
     },
     {
       "id": 2,
-      "name": "Dünger",
-      "image": "/images/c2.png",
-      "quantity": 30
+      "name": "Monitor"
     },
     {
       "id": 3,
-      "name": "Erde & Substrate",
-      "image": "/images/c3.png",
-      "quantity": 30
+      "name": "Miscellaneous"
     },
     {
       "id": 4,
-      "name": "Bewässerung",
-      "image": "/images/c4.png",
-      "quantity": 30
+      "name": "Grow Equipment"
     },
     {
       "id": 5,
-      "name": "Töpfe & Behälter",
-      "image": "/images/c5.png",
-      "quantity": 30
+      "name": "Pots"
+    },
+    {
+      "id": 6,
+      "name": "Light Hangers"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "name": "BỘ PC MEOW (I5 13500 / RAM 16G DDR5 / VGA RTX 4060 8G)",
+      "categoryId": 1,
+      "price": "2323232",
+      "image": "https://nguyencongpc.vn/media/product/250-25984-pc-meo.jpg",
+      "desc": "Bộ PC Meow của hãng C",
+      "isBestSeller": false
+    },
+    {
+      "id": 2,
+      "name": "Màn Hình Gaming AOC 27G4/74 (Fast IPS, 27 Inch, 180Hz, FHD)",
+      "categoryId": 1,
+      "price": "100",
+      "image": "https://nguyencongpc.vn/media/product/250-26469-27g2z_f.png",
+      "desc": "GIỚI THIỆU MÀN HÌNH GAMING",
+      "isBestSeller": false
+    },
+    {
+      "id": 3,
+      "name": "san pham 3",
+      "categoryId": 3,
+      "price": "1000",
+      "image": "https://nguyencongpc.vn/media/product/18453-g560g560.jpg",
+      "desc": "dvsdvfdb",
+      "isBestSeller": false
+    },
+    {
+      "id": 4,
+      "name": "san pham 2",
+      "categoryId": 3,
+      "price": 5000000,
+      "image": "https://nguyencongpc.vn/media/product/250-22833-vh310-ruhfur.jpg",
+      "desc": "dưgiouehgjesgr",
+      "isBestSeller": false
+    },
+    {
+      "id": 5,
+      "name": "san pham 1",
+      "categoryId": 3,
+      "price": 200,
+      "image": "https://nguyencongpc.vn/media/product/18453-g560g560.jpg",
+      "desc": "dưgiouehgjesgr",
+      "isBestSeller": false
     },
     {
       "id": 6,
       "name": "Growbox",
-      "image": "/images/c6.png",
-      "quantity": 30
+      "categoryId": 1,
+      "price": "1000",
+      "image": "/public/images/anh1.png",
+      "desc": "Best seller product",
+      "isBestSeller": true
     },
     {
       "id": 7,
-      "name": "Pflanzen & Gärtnern",
-      "image": "/images/c7.png",
-      "quantity": 30
+      "name": "Töpfe",
+      "categoryId": 5,
+      "price": "10000",
+      "image": "/public/images/anh2.png",
+      "desc": "Best seller product",
+      "isBestSeller": true
     },
     {
       "id": 8,
-      "name": "Lüftung & Klimaanlage",
-      "image": "/images/c8.png",
-      "quantity": 30
-    }
-  ],
-  "bestSellers": [
-    {
-      "id": 1,
-      "name": "Growbox",
-      "category": "Dress",
-      "price": 963.85,
-      "image": "/public/images/anh1.png"
-    },
-    {
-      "id": 2,
-      "name": "Töpfe",
-      "category": "5 by 5 pots for planting",
-      "price": 963.85,
-      "image": "/public/images/anh2.png"
-    },
-    {
-      "id": 3,
       "name": "Lichthänger-Set",
-      "category": "Light-hanger set",
-      "price": 963.85,
-      "image": "/public/images/anh3.png"
+      "categoryId": 1,
+      "price": 1200,
+      "image": "/public/images/anh3.png",
+      "desc": "Best seller product",
+      "isBestSeller": true
     },
     {
-      "id": 4,
+      "id": 9,
       "name": "Licht",
-      "category": "Dress",
-      "price": 963.85,
-      "image": "/public/images/anh4.png"
-    }
-  ],
-  "about": [
-    {
-      "src": "/public/images/b1.png",
-      "alt": "garten spaten",
-      "label": "garten spaten"
-    },
-    {
-      "src": "/public/images/b2.png",
-      "alt": "sand",
-      "label": "sand"
-    },
-    {
-      "src": "/public/images/b3.png",
-      "alt": "pflanzer",
-      "label": "pflanzer"
-    },
-    {
-      "src": "/public/images/b4.png",
-      "alt": "schlammkuchen",
-      "label": "schlammkuchen"
-    },
-    {
-      "src": "/public/images/b5.png",
-      "alt": "klemmen",
-      "label": "klemmen"
+      "categoryId": 3,
+      "price": 100,
+      "image": "/public/images/anh4.png",
+      "desc": "Best seller product",
+      "isBestSeller": true
     }
   ],
   "users": [

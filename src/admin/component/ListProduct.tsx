@@ -1,5 +1,6 @@
-import { Product } from "../../interface/Product";
+import React from "react";
 import Button from "@mui/material/Button";
+import { Product } from "../../interface/Product";
 
 type Props = {
   products: Product[];
@@ -10,8 +11,9 @@ type Props = {
 
 const ListProduct = ({ products, handleRemove, onAdd, onEdit }: Props) => {
   return (
-    <div className=" mx-auto  flex flex-col gap-5">
-      <Button onClick={onAdd} variant="contained" className=" w-[20%]">
+    
+    <div className="mx-auto flex flex-col gap-5">
+      <Button onClick={onAdd} variant="contained" className="w-[20%]">
         Thêm sản phẩm
       </Button>
 
@@ -38,34 +40,20 @@ const ListProduct = ({ products, handleRemove, onAdd, onEdit }: Props) => {
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr
-                key={product.id}
-                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-              >
-                <th
-                  scope="row"
-                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
-                >
+              <tr key={product.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {product.name}
                 </th>
                 <td className="px-6 py-4">
-                  <img src={product.image} className="w-20 h-20" alt="" />
+                  <img src={product.image} className="w-20 h-20" alt={product.name} />
                 </td>
                 <td className="px-6 py-4">{product.desc}</td>
                 <td className="px-6 py-4">${product.price}</td>
-                <td className="px-6 py-4 flex gap-2  items-center">
-                  <Button
-                    onClick={() => handleRemove(product.id)}
-                    variant="outlined"
-                    color="error"
-                  >
+                <td className="px-6 py-4 flex gap-2 items-center">
+                  <Button onClick={() => handleRemove(product.id)} variant="outlined" color="error">
                     Xóa
                   </Button>
-                  <Button
-                    onClick={() => onEdit(product)}
-                    variant="contained"
-                    color="success"
-                  >
+                  <Button onClick={() => onEdit(product)} variant="contained" color="success">
                     Sửa
                   </Button>
                 </td>

@@ -1,11 +1,10 @@
-import instance from ".";
+// src/api/apiCategory.ts
+import axios from 'axios';
+import { Category } from '../interface/Category';
 
-export const getAllCategories = async () => {
-    try {
-      const { data } = await instance.get(`/categories`);
-      return data;
-    } catch (error) {
-      console.error('Failed to fetch categories:', error);
-      throw new Error('Failed to fetch categories');
-    }
-  };
+const API_URL = 'http://localhost:3000/categories';
+
+export const getAllCategories = async (): Promise<Category[]> => {
+  const response = await axios.get(API_URL);
+  return response.data;
+};
