@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import ListProduct from "./ListProduct";
 import AddProduct from "./AddProduct";
 import EditProduct from "./EditProduct";
-import { Product } from "../../interface/Product";
-import { addProduct, deleteProduct, getAllProducts, updateProduct } from "../../api/apiProduct";
+import { Product } from "../../../interface/Product";
+import { addProduct, deleteProduct, getAllProducts, updateProduct } from "../../../api/apiProduct";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 

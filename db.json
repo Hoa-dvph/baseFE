@@ -2,7 +2,7 @@
   "categories": [
     {
       "id": 1,
-      "name": "PC"
+      "name": "ẸC"
     },
     {
       "id": 2,
@@ -23,13 +23,17 @@
     {
       "id": 6,
       "name": "Light Hangers"
+    },
+    {
+      "name": "member",
+      "id": 7
     }
   ],
   "products": [
     {
       "id": 1,
       "name": "BỘ PC MEOW (I5 13500 / RAM 16G DDR5 / VGA RTX 4060 8G)",
-      "categoryId": 1,
+      "categoryId": 5,
       "price": "2323232",
       "image": "https://nguyencongpc.vn/media/product/250-25984-pc-meo.jpg",
       "desc": "Bộ PC Meow của hãng C",

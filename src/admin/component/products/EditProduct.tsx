@@ -1,10 +1,10 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Product } from "../../interface/Product";
-import { Category } from "../../interface/Category";
+import { Product } from "../../../interface/Product";
+import { Category } from "../../../interface/Category";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import { getAllCategories } from "../../api/apiCategory";
+import { getAllCategories } from "../../../api/apiCategory";
 import { toast } from "react-toastify";
 
 type Props = {

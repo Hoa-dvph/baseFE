@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -17,16 +17,18 @@ import {
   updateProduct,
 } from "./api/apiProduct";
 import { Product } from "./interface/Product";
-import EditProduct from "./admin/component/EditProduct";
-import ListProduct from "./admin/component/ListProduct";
+import EditProduct from "./admin/component/products/EditProduct";
+import ListProduct from "./admin/component/products/ListProduct";
 import Login from "./admin/component/Login";
 import Register from "./admin/component/Register";
 import LayOut from "./admin/layout";
 import Page from "./page";
 import HomePage from "./page/HomePage";
 import ProductsList from "./page/ProductsList";
-import AddProduct from "./admin/component/AddProduct";
+import AddProduct from "./admin/component/products/AddProduct";
 import ProductDetail from "./page/ProductDetail.tsx";
+import CategoryList from "./admin/component/category/CategoryList.tsx";
+import AddCategory from "./admin/component/category/AddCategory.tsx";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -34,7 +36,8 @@ function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const { reset } = useForm();
-
+  const location = useLocation();
+  
   useEffect(() => {
     (async () => {
       try {
@@ -112,6 +115,8 @@ function App() {
           />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
+          <Route path="categories" element={<CategoryList />} />
+          <Route path="categories/add" element={<AddCategory />} />
         </Route>
       </Routes>
 

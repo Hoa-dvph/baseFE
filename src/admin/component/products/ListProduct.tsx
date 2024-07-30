@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import { Product } from "../../interface/Product";
+import { Product } from "../../../interface/Product";
 
 type Props = {
   products: Product[];
