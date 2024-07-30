@@ -1,24 +1,32 @@
+import React from "react";
 import { useForm } from "react-hook-form";
 import { Product } from "../../interface/Product";
+import { Category } from "../../interface/Category";
 import { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
-import { Category } from "../../interface/Category";
-import { toast } from "react-toastify";
-import { addProduct } from "../../api/apiProduct";
 import { getAllCategories } from "../../api/apiCategory";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   onAdd: (product: Product) => void;
+  onCancel: () => void; // Add this prop for cancel action
 };
 
-const AddProduct = ({ onAdd }: Props) => {
+const AddProduct = ({ onAdd, onCancel }: Props) => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<Product>();
   const [categories, setCategories] = useState<Category[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const data = await getAllCategories();
-      setCategories(data);
+      try {
+        const data = await getAllCategories();
+        setCategories(data);
+      } catch (error) {
+        toast.error("Có lỗi xảy ra khi lấy danh mục.");
+        console.error("Error fetching categories:", error);
+      }
     };
 
     fetchCategories();
@@ -26,18 +34,19 @@ const AddProduct = ({ onAdd }: Props) => {
 
   const onSubmit = async (data: Product) => {
     try {
-      const newProduct = await addProduct(data);
-      onAdd(newProduct);
+      // Convert categoryId to a number if it exists
+      const newProduct = {
+        ...data,
+        categoryId: Number(data.categoryId) // Ensure categoryId is a number
+      };
+      await onAdd(newProduct);
       reset();
       toast.success("Thêm sản phẩm thành công!");
+      navigate("/admin");
     } catch (error) {
       toast.error("Có lỗi xảy ra khi thêm sản phẩm.");
     }
   };
-
-  if (categories.length === 0) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto flex gap-5 flex-col">
@@ -98,6 +107,9 @@ const AddProduct = ({ onAdd }: Props) => {
 
       <Button variant="contained" type="submit">
         Thêm sản phẩm
+      </Button>
+      <Button variant="outlined" onClick={onCancel}>
+        Hủy
       </Button>
     </form>
   );

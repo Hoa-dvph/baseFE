@@ -33,48 +33,21 @@
       "price": "2323232",
       "image": "https://nguyencongpc.vn/media/product/250-25984-pc-meo.jpg",
       "desc": "Bộ PC Meow của hãng C",
-      "isBestSeller": false
+      "isBestSeller": true
     },
     {
       "id": 2,
       "name": "Màn Hình Gaming AOC 27G4/74 (Fast IPS, 27 Inch, 180Hz, FHD)",
-      "categoryId": 1,
+      "categoryId": "3",
       "price": "100",
       "image": "https://nguyencongpc.vn/media/product/250-26469-27g2z_f.png",
       "desc": "GIỚI THIỆU MÀN HÌNH GAMING",
       "isBestSeller": false
     },
     {
-      "id": 3,
-      "name": "san pham 3",
-      "categoryId": 3,
-      "price": "1000",
-      "image": "https://nguyencongpc.vn/media/product/18453-g560g560.jpg",
-      "desc": "dvsdvfdb",
-      "isBestSeller": false
-    },
-    {
-      "id": 4,
-      "name": "san pham 2",
-      "categoryId": 3,
-      "price": 5000000,
-      "image": "https://nguyencongpc.vn/media/product/250-22833-vh310-ruhfur.jpg",
-      "desc": "dưgiouehgjesgr",
-      "isBestSeller": false
-    },
-    {
-      "id": 5,
-      "name": "san pham 1",
-      "categoryId": 3,
-      "price": 200,
-      "image": "https://nguyencongpc.vn/media/product/18453-g560g560.jpg",
-      "desc": "dưgiouehgjesgr",
-      "isBestSeller": false
-    },
-    {
       "id": 6,
       "name": "Growbox",
-      "categoryId": 1,
+      "categoryId": 2,
       "price": "1000",
       "image": "/public/images/anh1.png",
       "desc": "Best seller product",
@@ -100,12 +73,12 @@
     },
     {
       "id": 9,
-      "name": "Licht",
+      "name": "Lichtr update",
       "categoryId": 3,
-      "price": 100,
+      "price": "1001",
       "image": "/public/images/anh4.png",
       "desc": "Best seller product",
-      "isBestSeller": true
+      "isBestSeller": false
     }
   ],
   "users": [

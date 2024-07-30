@@ -6,7 +6,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import "./App.css";
@@ -17,7 +17,6 @@ import {
   updateProduct,
 } from "./api/apiProduct";
 import { Product } from "./interface/Product";
-import AddProduct from "./admin/component/AddProduct";
 import EditProduct from "./admin/component/EditProduct";
 import ListProduct from "./admin/component/ListProduct";
 import Login from "./admin/component/Login";
@@ -26,6 +25,7 @@ import LayOut from "./admin/layout";
 import Page from "./page";
 import HomePage from "./page/HomePage";
 import ProductsList from "./page/ProductsList";
+import AddProduct from "./admin/component/AddProduct";
 import ProductDetail from "./page/ProductDetail.tsx";
 
 function App() {
@@ -80,13 +80,12 @@ function App() {
 
   const handleRemove = async (id: number | string) => {
     try {
-      const confirm = window.confirm("Bạn có muốn xóa không?");
-      if (confirm) {
-        await deleteProduct(id);
-        setProducts(products.filter((product) => product.id !== id));
-      }
+      await deleteProduct(id);
+      setProducts(products.filter((product) => product.id !== id));
+      toast.success('Sản phẩm đã được xóa thành công!');
     } catch (error) {
       console.error("Error removing product:", error);
+      toast.error('Có lỗi xảy ra khi xóa sản phẩm.');
     }
   };
 
@@ -120,9 +119,9 @@ function App() {
         <DialogTitle>{isEditing ? "Sửa sản phẩm" : "Thêm sản phẩm"}</DialogTitle>
         <DialogContent>
           {isEditing ? (
-            <EditProduct onEdit={handleEdit} product={currentProduct} />
+            <EditProduct onEdit={handleEdit} product={currentProduct} onCancel={handleClose} />
           ) : (
-            <AddProduct onAdd={handleAdd} />
+            <AddProduct onAdd={handleAdd} onCancel={handleClose}/>
           )}
         </DialogContent>
         <DialogActions>
