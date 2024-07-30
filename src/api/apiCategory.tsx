@@ -1,4 +1,3 @@
-// src/api/apiCategory.ts
 import axios from 'axios';
 import { Category } from '../interface/Category';
 
@@ -15,6 +14,14 @@ export const updateCategory = async (category: Category): Promise<Category> => {
     return response.data;
   } catch (error) {
     console.error('Error updating category:', error);
-    throw error; // Ném lỗi lên trên để các component gọi hàm này có thể xử lý lỗi
+    throw error; 
   }
 };
+export const deleteCategory = async (categoryId: number): Promise<void> => {
+  try {
+    await axios.delete(`${API_URL}/${categoryId}`);
+  } catch (error) {
+    console.error('Error deleting category:', error);
+    throw error;
+  };
+}

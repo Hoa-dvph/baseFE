@@ -28,7 +28,6 @@ import ProductsList from "./page/ProductsList";
 import AddProduct from "./admin/component/products/AddProduct";
 import ProductDetail from "./page/ProductDetail.tsx";
 import CategoryList from "./admin/component/category/CategoryList.tsx";
-import AddCategory from "./admin/component/category/AddCategory.tsx";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -109,14 +108,13 @@ function App() {
                 products={products}
                 handleRemove={handleRemove}
                 onAdd={() => handleOpen(null)}
-                onEdit={handleOpen}
+                onEdit={handleOpen} 
               />
             }
           />
           <Route path="register" element={<Register />} />
           <Route path="login" element={<Login />} />
           <Route path="categories" element={<CategoryList />} />
-          <Route path="categories/add" element={<AddCategory />} />
         </Route>
       </Routes>
 

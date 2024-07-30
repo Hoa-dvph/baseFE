@@ -3,14 +3,13 @@ import { useForm } from "react-hook-form";
 import { Product } from "../../../interface/Product";
 import { Category } from "../../../interface/Category";
 import { useState, useEffect } from "react";
-import Button from "@mui/material/Button";
 import { getAllCategories } from "../../../api/apiCategory";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 type Props = {
   onAdd: (product: Product) => void;
-  onCancel: () => void; // Add this prop for cancel action
+  onCancel: () => void;
 };
 
 const AddProduct = ({ onAdd, onCancel }: Props) => {
@@ -34,10 +33,9 @@ const AddProduct = ({ onAdd, onCancel }: Props) => {
 
   const onSubmit = async (data: Product) => {
     try {
-      // Convert categoryId to a number if it exists
       const newProduct = {
         ...data,
-        categoryId: Number(data.categoryId) // Ensure categoryId is a number
+        categoryId: Number(data.categoryId)
       };
       await onAdd(newProduct);
       reset();
@@ -49,68 +47,113 @@ const AddProduct = ({ onAdd, onCancel }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto flex gap-5 flex-col">
-      <h2>Thêm sản phẩm</h2>
-      <input
-        type="text"
-        {...register("name", { required: "Tên sản phẩm là bắt buộc" })}
-        placeholder="Tên sản phẩm"
-        className={`block w-full p-2 text-gray-900 border ${errors.name ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500`}
-      />
-      {errors.name && <span className="text-red-500 text-xs">{errors.name.message}</span>}
+    <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto max-w-lg p-6 bg-white shadow-lg rounded-lg space-y-6">
+      <h2 className="text-3xl font-semibold text-gray-800 mb-6">Thêm sản phẩm</h2>
 
-      <input
-        type="text"
-        {...register("image", { required: "Ảnh sản phẩm là bắt buộc" })}
-        placeholder="URL ảnh sản phẩm"
-        className={`block w-full p-2 text-gray-900 border ${errors.image ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500`}
-      />
-      {errors.image && <span className="text-red-500 text-xs">{errors.image.message}</span>}
+      <div className="space-y-4">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            Tên sản phẩm
+          </label>
+          <input
+            type="text"
+            id="name"
+            {...register("name", { required: "Tên sản phẩm là bắt buộc" })}
+            placeholder="Tên sản phẩm"
+            className={`block w-full p-3 border ${errors.name ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
+          />
+          {errors.name && <span className="text-red-500 text-xs mt-1">{errors.name.message}</span>}
+        </div>
 
-      <input
-        type="text"
-        {...register("desc", { required: "Mô tả sản phẩm là bắt buộc" })}
-        placeholder="Mô tả sản phẩm"
-        className={`block w-full p-2 text-gray-900 border ${errors.desc ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500`}
-      />
-      {errors.desc && <span className="text-red-500 text-xs">{errors.desc.message}</span>}
+        <div>
+          <label htmlFor="image" className="block text-sm font-medium text-gray-700 mb-1">
+            URL ảnh sản phẩm
+          </label>
+          <input
+            type="text"
+            id="image"
+            {...register("image", { required: "Ảnh sản phẩm là bắt buộc" })}
+            placeholder="URL ảnh sản phẩm"
+            className={`block w-full p-3 border ${errors.image ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
+          />
+          {errors.image && <span className="text-red-500 text-xs mt-1">{errors.image.message}</span>}
+        </div>
 
-      <input
-        type="number"
-        {...register("price", { required: "Giá sản phẩm là bắt buộc", min: { value: 0, message: "Giá sản phẩm không thể âm" } })}
-        placeholder="Giá sản phẩm"
-        className={`block w-full p-2 text-gray-900 border ${errors.price ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500`}
-      />
-      {errors.price && <span className="text-red-500 text-xs">{errors.price.message}</span>}
+        <div>
+          <label htmlFor="desc" className="block text-sm font-medium text-gray-700 mb-1">
+            Mô tả sản phẩm
+          </label>
+          <input
+            type="text"
+            id="desc"
+            {...register("desc", { required: "Mô tả sản phẩm là bắt buộc" })}
+            placeholder="Mô tả sản phẩm"
+            className={`block w-full p-3 border ${errors.desc ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
+          />
+          {errors.desc && <span className="text-red-500 text-xs mt-1">{errors.desc.message}</span>}
+        </div>
 
-      <select
-        {...register("categoryId", { required: "Danh mục là bắt buộc" })}
-        className={`block w-full p-2 text-gray-900 border ${errors.categoryId ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-xs focus:ring-blue-500 focus:border-blue-500`}
-      >
-        <option value="">Chọn danh mục</option>
-        {categories.map((category) => (
-          <option key={category.id} value={category.id}>
-            {category.name}
-          </option>
-        ))}
-      </select>
-      {errors.categoryId && <span className="text-red-500 text-xs">{errors.categoryId.message}</span>}
+        <div>
+          <label htmlFor="price" className="block text-sm font-medium text-gray-700 mb-1">
+            Giá sản phẩm
+          </label>
+          <input
+            type="number"
+            id="price"
+            {...register("price", { required: "Giá sản phẩm là bắt buộc", min: { value: 0, message: "Giá sản phẩm không thể âm" } })}
+            placeholder="Giá sản phẩm"
+            className={`block w-full p-3 border ${errors.price ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
+          />
+          {errors.price && <span className="text-red-500 text-xs mt-1">{errors.price.message}</span>}
+        </div>
 
-      <div className="flex items-center gap-2">
-        <input
-          type="checkbox"
-          {...register("isBestSeller")}
-          className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-        />
-        <label className="text-gray-900 dark:text-white">Best Seller</label>
+        <div>
+          <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700 mb-1">
+            Danh mục
+          </label>
+          <select
+            id="categoryId"
+            {...register("categoryId", { required: "Danh mục là bắt buộc" })}
+            className={`block w-full p-3 border ${errors.categoryId ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
+          >
+            <option value="">Chọn danh mục</option>
+            {categories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ))}
+          </select>
+          {errors.categoryId && <span className="text-red-500 text-xs mt-1">{errors.categoryId.message}</span>}
+        </div>
+
+        <div className="flex items-center gap-2">
+          <input
+            type="checkbox"
+            id="isBestSeller"
+            {...register("isBestSeller")}
+            className="w-5 h-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+          />
+          <label htmlFor="isBestSeller" className="text-gray-700 text-sm">
+            Best Seller
+          </label>
+        </div>
       </div>
 
-      <Button variant="contained" type="submit">
-        Thêm sản phẩm
-      </Button>
-      <Button variant="outlined" onClick={onCancel}>
-        Hủy
-      </Button>
+      <div className="flex justify-end gap-4">
+        <button
+          type="button"
+          onClick={onCancel}
+          className="px-4 py-2 bg-gray-300 text-gray-800 rounded-lg shadow-sm hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-500 transition duration-300"
+        >
+          Hủy
+        </button>
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg shadow-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+        >
+          Thêm sản phẩm
+        </button>
+      </div>
     </form>
   );
 };

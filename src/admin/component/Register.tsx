@@ -11,7 +11,7 @@ const Register = () => {
         formData
       );
     } catch (error) {
-      console.log("🚀 ~ onSubmit ~ error:", error);
+      console.log🚀(" ~ onSubmit ~ error:", error);
     }
   };
 

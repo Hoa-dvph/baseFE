@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { Category } from '../../../interface/Category';
-import { updateCategory } from '../../../api/apiCategory'; // Giả sử bạn có API này
+import { updateCategory } from '../../../api/apiCategory';
 import { toast } from 'react-toastify';
 
 type Props = {
@@ -34,7 +34,7 @@ const EditCategoryModal = ({ category, onClose, onUpdate }: Props) => {
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex items-center justify-center">
-      <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+      <div className="bg-white p-6 rounded-lg shadow-lg w-full max-w-md mx-auto">
         <h2 className="text-xl font-semibold mb-4">Edit Category</h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-4">
@@ -45,19 +45,19 @@ const EditCategoryModal = ({ category, onClose, onUpdate }: Props) => {
               placeholder="Tên danh mục"
               className={`block w-full p-2 border ${errors.name ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50`}
             />
-            {errors.name && <span className="text-red-500 text-xs">{errors.name.message}</span>}
+            {errors.name && <span className="text-red-500 text-xs mt-1">{errors.name.message}</span>}
           </div>
           <div className="flex justify-end gap-2">
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600"
+              className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition duration-300"
             >
               Cancel
             </button>
             <button
               type="submit"
-              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700"
+              className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
             >
               Save
             </button>

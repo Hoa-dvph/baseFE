@@ -11,13 +11,14 @@ type Props = {
 
 const ListProduct = ({ products, handleRemove, onAdd, onEdit }: Props) => {
   return (
-    <div className="mx-auto flex flex-col gap-5">
-      <Button onClick={onAdd} variant="contained" className="w-[20%]">
+    <div className="container mx-auto flex flex-col gap-5 py-8">
+      <h2 className="text-2xl font-bold mb-4">Products List</h2>
+      <Button onClick={onAdd} variant="contained" className="w-1/5">
         Thêm sản phẩm
       </Button>
 
-      <div className="relative overflow-x-auto border-2 border-solid border-gray-300 shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+      <div className="relative overflow-x-auto border border-gray-300 shadow-md sm:rounded-lg">
+        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-6 py-3">
@@ -46,28 +47,42 @@ const ListProduct = ({ products, handleRemove, onAdd, onEdit }: Props) => {
               </tr>
             ) : (
               products.map((product) => (
-                <tr key={product.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <tr
+                  key={product.id}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                >
+                  <th
+                    scope="row"
+                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  >
                     {product.name}
                   </th>
                   <td className="px-6 py-4">
-                    <img src={product.image} className="w-20 h-20" alt={product.name} />
+                    <img
+                      src={product.image}
+                      className="w-20 h-20 object-cover"
+                      alt={product.name}
+                    />
                   </td>
                   <td className="px-6 py-4">{product.desc}</td>
                   <td className="px-6 py-4">${product.price}</td>
                   <td className="px-6 py-4 flex gap-2 items-center">
                     <Button
                       onClick={() => {
-                          if (window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
-                            handleRemove(product.id);
-                          }
+                        if (window.confirm("Bạn có chắc chắn muốn xóa sản phẩm này?")) {
+                          handleRemove(product.id);
+                        }
                       }}
                       variant="outlined"
                       color="error"
                     >
                       Xóa
                     </Button>
-                    <Button onClick={() => onEdit(product)} variant="contained" color="success">
+                    <Button
+                      onClick={() => onEdit(product)}
+                      variant="contained"
+                      color="success"
+                    >
                       Sửa
                     </Button>
                   </td>
