@@ -2,64 +2,21 @@ import React, { useState, useEffect } from "react";
 import { Divider } from "@mui/material";
 import { Category } from "../../../interface/Category";
 
-const categoriesData: Category[] = [
-  {
-    categoryId: 1,
-    name: "Beleuchtung",
-    image: "/images/c1.png",
-    quantity: 30,
-  },
-  {
-    categoryId: 2,
-    name: "Dünger",
-    image: "/images/c2.png",
-    quantity: 30,
-  },
-  {
-    categoryId: 3,
-    name: "Erde & Substrate",
-    image: "/images/c3.png",
-    quantity: 30,
-  },
-  {
-    categoryId: 4,
-    name: "Bewässerung",
-    image: "/images/c4.png",
-    quantity: 30,
-  },
-  {
-    categoryId: 5,
-    name: "Töpfe & Behälter",
-    image: "/images/c5.png",
-    quantity: 30,
-  },
-  {
-    categoryId: 6,
-    name: "Growbox",
-    image: "/images/c6.png",
-    quantity: 30,
-  },
-  {
-    categoryId: 7,
-    name: "Pflanzen & Gärtnern",
-    image: "/images/c7.png",
-    quantity: 30,
-  },
-  {
-    categoryId: 8,
-    name: "Lüftung & Klimaanlage",
-    image: "/images/c8.png",
-    quantity: 30,
-  },
-];
-
 const Kategorien = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setCategories(categoriesData);
-    setLoading(false);
+    fetch("http://localhost:3000/categories")
+      .then((response) => response.json())
+      .then((data) => {
+        setCategories(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
   }, []);
 
   if (loading) return <div>Loading...</div>;
