@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Route, Routes, useLocation } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -26,8 +26,9 @@ import Page from "./page";
 import HomePage from "./page/HomePage";
 import ProductsList from "./page/ProductsList";
 import AddProduct from "./admin/component/products/AddProduct";
+import CategoryList from "./admin/component/category/CategoryList";
+import ProductsByCategory from "./page/HomePage/component/ProductByCategory/ProductsByCategory";
 import ProductDetail from "./page/ProductDetail.tsx";
-import CategoryList from "./admin/component/category/CategoryList.tsx";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -36,7 +37,7 @@ function App() {
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const { reset } = useForm();
   const location = useLocation();
-  
+
   useEffect(() => {
     (async () => {
       try {
@@ -98,7 +99,8 @@ function App() {
         <Route path="/" element={<Page />}>
           <Route index element={<HomePage />} />
           <Route path="/products-list" element={<ProductsList />} />
-          <Route path="/products-detail" element={<ProductDetail />} />
+          <Route path="/products-detail/:id" element={<ProductDetail />} />
+          <Route path="/products-by-category/:categoryId" element={<ProductsByCategory />} /> {/* Route mới */}
         </Route>
         <Route path="/admin" element={<LayOut />}>
           <Route
