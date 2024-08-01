@@ -3,50 +3,42 @@
     {
       "id": 1,
       "name": "Beleuchtung",
-      "image": "/images/c1.png",
-      "quantity": 30
+      "image": "/images/c1.png"
     },
     {
       "id": 2,
       "name": "Dünger",
-      "image": "/images/c2.png",
-      "quantity": 30
+      "image": "/images/c2.png"
     },
     {
       "id": 3,
       "name": "Erde & Substrate",
-      "image": "/images/c3.png",
-      "quantity": 30
+      "image": "/images/c3.png"
     },
     {
       "id": 4,
       "name": "Bewässerung",
-      "image": "/images/c4.png",
-      "quantity": 30
+      "image": "/images/c4.png"
     },
     {
       "id": 5,
       "name": "Töpfe & Behälter",
-      "image": "/images/c5.png",
-      "quantity": 30
+      "image": "/images/c5.png"
     },
     {
       "id": 6,
       "name": "Growbox",
-      "image": "/images/c6.png",
-      "quantity": 30
+      "image": "/images/c6.png"
     },
     {
       "id": 7,
       "name": "Pflanzen & Gärtnern",
-      "image": "/images/c7.png",
-      "quantity": 30
+      "image": "/images/c7.png"
     },
     {
       "id": 8,
       "name": "Lüftung & Klimaanlage",
-      "image": "/images/c8.png",
-      "quantity": 30
+      "image": "/images/c8.png"
     }
   ],
   "products": [

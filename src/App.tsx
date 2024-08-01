@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import "./App.css";
 import {
@@ -29,6 +29,7 @@ import AddProduct from "./admin/component/products/AddProduct";
 import CategoryList from "./admin/component/category/CategoryList";
 import ProductsByCategory from "./page/HomePage/component/ProductByCategory/ProductsByCategory";
 import ProductDetail from "./page/ProductDetail.tsx";
+import SearchResults from "./admin/component/SearchResult/SerchResult.tsx";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -36,7 +37,6 @@ function App() {
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
   const { reset } = useForm();
-  const location = useLocation();
 
   useEffect(() => {
     (async () => {
@@ -85,10 +85,10 @@ function App() {
     try {
       await deleteProduct(id);
       setProducts(products.filter((product) => product.id !== id));
-      toast.success('Sản phẩm đã được xóa thành công!');
+      toast.success("Sản phẩm đã được xóa thành công!");
     } catch (error) {
       console.error("Error removing product:", error);
-      toast.error('Có lỗi xảy ra khi xóa sản phẩm.');
+      toast.error("Có lỗi xảy ra khi xóa sản phẩm.");
     }
   };
 
@@ -100,7 +100,8 @@ function App() {
           <Route index element={<HomePage />} />
           <Route path="/products-list" element={<ProductsList />} />
           <Route path="/products-detail/:id" element={<ProductDetail />} />
-          <Route path="/products-by-category/:categoryId" element={<ProductsByCategory />} /> {/* Route mới */}
+          <Route path="/category/:categoryId" element={<ProductsByCategory />} />
+          <Route path="/search" element={<SearchResults />} />
         </Route>
         <Route path="/admin" element={<LayOut />}>
           <Route
