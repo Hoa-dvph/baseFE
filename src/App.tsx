@@ -111,7 +111,7 @@ function App() {
           <Route path="/category/:categoryId" element={<ProductsByCategory />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+          <Route path="/login" element={<Login  />} />
         </Route>
         <Route path="/admin" element={<LayOut />}>
           <Route

@@ -34,6 +34,11 @@
       "id": 7,
       "name": "Cây & Làm vườn",
       "image": "/images/c7.png"
+    },
+    {
+      "id": 8,
+      "name": "Cây & Cỏ",
+      "image": "/images/c8.png"
     }
   ],
   "products": [
@@ -314,15 +319,11 @@
   ],
   "users": [
     {
-      "email": "hoa2k4bh3@gmail.com",
-      "password": "$2a$10$KYCHL8oxas4mVKcJm9BRQOK3nn9KePNMLNYext3/5xSiK2vJ8JuEe",
-      "username": "1212",
+      "email": "admin@gmail.com",
+      "password": "$2a$10$JPtNmECgyLnMQD1I4wJYCu3JUIrq.4doMDfQe6T0BNNvHBVaIsIym",
+      "name": "ADMIN",
+      "confirmPassword": "123123",
       "id": 1
-    },
-    {
-      "email": "hoa2k4bh1@gmail.com",
-      "password": "$2a$10$ByfXMwmbq4OSYvnFqxtXO.9zUBhkELIoQ6zKRcv2Kj4d4r.o6ycJa",
-      "id": 2
     }
   ]
 }

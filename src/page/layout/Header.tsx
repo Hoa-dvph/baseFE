@@ -23,7 +23,7 @@ const Header = () => {
             <input
               className="w-[80%] focus:outline-none focus:border-transparent"
               type="text"
-              placeholder="Suchen Sie nach Produkten, Marken und mehr"
+              placeholder="Tìm kiếm sản phẩm, thương hiệu và nhiều hơn nữa"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
             />
@@ -33,23 +33,23 @@ const Header = () => {
           </form>
           <div className="flex items-center gap-24">
             <div className="flex items-center gap-2 text-white">
-              <span>En</span>
+              <span>Vi</span>
               <IoIosArrowDown />
             </div>
             <div className="flex items-center gap-2 text-white">
               <LuUser />
-              Account
+              Tài khoản
             </div>
             <div className="flex items-center gap-2 text-white">
               <BsHandbag />
-              Cart
+              Giỏ hàng
             </div>
           </div>
         </div>
         <Divider className="bg-white" />
         <div className="flex justify-between">
           <div className="flex items-center text-white gap-1">
-            <span>Beleuchtung</span>
+            <span>Chiếu sáng</span>
             <IoIosArrowDown />
           </div>
           <div className="flex items-center text-white gap-1">
@@ -57,23 +57,23 @@ const Header = () => {
             <IoIosArrowDown />
           </div>
           <div className="flex items-center text-white gap-1">
-            <span>Dünger</span>
+            <span>Phân bón</span>
             <IoIosArrowDown />
           </div>
           <div className="flex items-center text-white gap-1">
-            <span>Erde & Substrate</span>
+            <span>Đất & Chất nền</span>
             <IoIosArrowDown />
           </div>
           <div className="flex items-center text-white gap-1">
-            <span>Töpfe & Behälter</span>
+            <span>Chậu & Thùng chứa</span>
             <IoIosArrowDown />
           </div>
           <div className="flex items-center text-white gap-1">
-            <span>Bewässerung</span>
+            <span>Tưới tiêu</span>
             <IoIosArrowDown />
           </div>
           <div className="flex items-center text-white gap-1">
-            <span>Lüftung & Klimaanlage</span>
+            <span>Thông gió & Điều hòa không khí</span>
             <IoIosArrowDown />
           </div>
         </div>
