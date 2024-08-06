@@ -8,14 +8,9 @@ export const getAllCategories = async (): Promise<Category[]> => {
   return response.data;
   
 };
-export const updateCategory = async (category: Category): Promise<Category> => {
-  try {
-    const response = await axios.put<Category>(`http://localhost:3000/categories/${category.id}`, category);
-    return response.data;
-  } catch (error) {
-    console.error('Error updating category:', error);
-    throw error; 
-  }
+export const updateCategory = async (id: number, category: Category) => {
+  const response = await axios.put(`http://localhost:3000/categories/${id}`, category);
+  return response.data;
 };
 export const deleteCategory = async (categoryId: number): Promise<void> => {
   try {
@@ -25,3 +20,7 @@ export const deleteCategory = async (categoryId: number): Promise<void> => {
     throw error;
   };
 }
+export const getProductsByCategory = async (category: string) => {
+  const response = await axios.get(`http://localhost:3000/products?category=${category}`);
+  return response.data;
+};

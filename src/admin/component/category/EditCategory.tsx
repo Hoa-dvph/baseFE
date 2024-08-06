@@ -12,7 +12,7 @@ type Props = {
 
 const EditCategoryModal = ({ category, onClose, onUpdate }: Props) => {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<Category>();
-  
+
   useEffect(() => {
     if (category) {
       reset(category);
@@ -21,8 +21,8 @@ const EditCategoryModal = ({ category, onClose, onUpdate }: Props) => {
 
   const onSubmit = async (data: Category) => {
     try {
-      await updateCategory(data);
-      onUpdate(data);
+      const updatedCategory = await updateCategory(data.id, data);
+      onUpdate(updatedCategory);
       toast.success('Cập nhật danh mục thành công!');
       onClose();
     } catch (error) {
@@ -46,6 +46,23 @@ const EditCategoryModal = ({ category, onClose, onUpdate }: Props) => {
               className={`block w-full p-2 border ${errors.name ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50`}
             />
             {errors.name && <span className="text-red-500 text-xs mt-1">{errors.name.message}</span>}
+          </div>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700">Image URL</label>
+            <input
+              type="text"
+              {...register("image", { required: "URL hình ảnh là bắt buộc" })}
+              placeholder="URL hình ảnh"
+              className={`block w-full p-2 border ${errors.image ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50`}
+            />
+            {errors.image && <span className="text-red-500 text-xs mt-1">{errors.image.message}</span>}
+            {category.image && (
+              <img
+                src={category.image}
+                alt={category.name}
+                className="mt-2 w-20 h-20 object-cover"
+              />
+            )}
           </div>
           <div className="flex justify-end gap-2">
             <button

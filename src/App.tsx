@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { Route, Routes } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -19,8 +18,6 @@ import {
 import { Product } from "./interface/Product";
 import EditProduct from "./admin/component/products/EditProduct";
 import ListProduct from "./admin/component/products/ListProduct";
-import Login from "./admin/component/Login";
-import Register from "./admin/component/Register";
 import LayOut from "./admin/layout";
 import Page from "./page";
 import HomePage from "./page/HomePage";
@@ -28,15 +25,18 @@ import ProductsList from "./page/ProductsList";
 import AddProduct from "./admin/component/products/AddProduct";
 import CategoryList from "./admin/component/category/CategoryList";
 import ProductsByCategory from "./page/HomePage/component/ProductByCategory/ProductsByCategory";
-import ProductDetail from "./page/ProductDetail.tsx";
-import SearchResults from "./admin/component/SearchResult/SerchResult.tsx";
+import SearchResults from "./admin/component/SearchResult/SerchResult";
+import Register from "./admin/component/Register";
+import Login from "./admin/component/Login";
+import PrivateRoute from "./PrivateRoute";
+import ProductDetail from "./page/ProductDetail.tsx/ProductDetail";
 
 function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [open, setOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [currentProduct, setCurrentProduct] = useState<Product | null>(null);
-  const { reset } = useForm();
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(!!sessionStorage.getItem('user'));
 
   useEffect(() => {
     (async () => {
@@ -58,7 +58,6 @@ function App() {
   const handleClose = () => {
     setOpen(false);
     setCurrentProduct(null);
-    reset();
   };
 
   const handleAdd = async (data: Product) => {
@@ -92,6 +91,15 @@ function App() {
     }
   };
 
+  const handleLogin = () => {
+    setIsAuthenticated(true);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('user');
+    setIsAuthenticated(false);
+  };
+
   return (
     <>
       <ToastContainer />
@@ -99,25 +107,29 @@ function App() {
         <Route path="/" element={<Page />}>
           <Route index element={<HomePage />} />
           <Route path="/products-list" element={<ProductsList />} />
-          <Route path="/products-detail/:id" element={<ProductDetail />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/category/:categoryId" element={<ProductsByCategory />} />
           <Route path="/search" element={<SearchResults />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
         </Route>
         <Route path="/admin" element={<LayOut />}>
           <Route
             index
             element={
-              <ListProduct
-                products={products}
-                handleRemove={handleRemove}
-                onAdd={() => handleOpen(null)}
-                onEdit={handleOpen} 
+              <PrivateRoute
+                element={<ListProduct products={products} handleRemove={handleRemove} onAdd={() => handleOpen(null)} onEdit={handleOpen} />}
+                isAuthenticated={isAuthenticated}
               />
             }
           />
-          <Route path="register" element={<Register />} />
-          <Route path="login" element={<Login />} />
-          <Route path="categories" element={<CategoryList />} />
+          
+          <Route path="categories" element={
+            <PrivateRoute
+              element={<CategoryList />}
+              isAuthenticated={isAuthenticated}
+            />
+          } />
         </Route>
       </Routes>
 
@@ -127,7 +139,7 @@ function App() {
           {isEditing ? (
             <EditProduct onEdit={handleEdit} product={currentProduct} onCancel={handleClose} />
           ) : (
-            <AddProduct onAdd={handleAdd} onCancel={handleClose}/>
+            <AddProduct onAdd={handleAdd} onCancel={handleClose} />
           )}
         </DialogContent>
         <DialogActions>

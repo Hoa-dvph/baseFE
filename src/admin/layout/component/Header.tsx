@@ -1,15 +1,19 @@
-// Header.js
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
+  const location = useLocation();
+
+  const isActive = (path: string) => (location.pathname === path ? "text-blue-500" : "");
+
   return (
-    <div className="bg-white border-solid border-2 rounded-xl border-gray-500 dark:bg-gray-900 dark:border-gray-700 w-64 flex-shrink-0">
-      <div className="flex flex-col items-center p-4">
-        <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse mb-4">
-        <img
- src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/svgs/solid/user-shield.svg"          className="h-8"
-          alt="Admin Logo" 
-        />
+    <div className="bg-white dark:bg-gray-900 border-solid border-2 rounded-xl border-gray-300 dark:border-gray-700 w-64 flex-shrink-0 shadow-lg">
+      <div className="flex flex-col items-center p-6">
+        <a href="#" className="flex items-center space-x-3 rtl:space-x-reverse mb-6">
+          <img
+            src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/svgs/solid/user-shield.svg"
+            className="h-10"
+            alt="Admin Logo"
+          />
           <span className="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">
             ADMIN
           </span>
@@ -18,20 +22,20 @@ const Header = () => {
           <li>
             <Link
               to="/admin"
-              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              className={`block py-2 px-4 rounded hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white transition duration-300 ${isActive("/admin")}`}
             >
               Home
             </Link>
           </li>
-          <li>
+          <li className="relative">
             <button
               id="dropdownNavbarLink"
               data-dropdown-toggle="dropdownNavbar"
-              className="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              className="flex items-center justify-between w-full py-2 px-4 text-gray-900 rounded hover:bg-gray-200 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white transition duration-300"
             >
               Dropdown{" "}
               <svg
-                className="w-2.5 h-2.5 ms-2.5"
+                className="w-3 h-3 ms-2"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -49,11 +53,11 @@ const Header = () => {
             {/* Dropdown menu */}
             <div
               id="dropdownNavbar"
-              className="z-10 hidden font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+              className="hidden absolute left-0 mt-2 w-44 bg-white dark:bg-gray-700 shadow-lg rounded-lg z-10"
             >
               <ul
                 className="py-2 text-sm text-gray-700 dark:text-gray-400"
-                aria-labelledby="dropdownLargeButton"
+                aria-labelledby="dropdownNavbarLink"
               >
                 <li>
                   <a
@@ -93,7 +97,7 @@ const Header = () => {
           <li>
             <Link
               to="/admin/categories"
-              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              className={`block py-2 px-4 rounded hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white transition duration-300 ${isActive("/admin/categories")}`}
             >
               Category
             </Link>
@@ -101,7 +105,7 @@ const Header = () => {
           <li>
             <Link
               to="/register"
-              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              className={`block py-2 px-4 rounded hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white transition duration-300 ${isActive("/register")}`}
             >
               Register
             </Link>
@@ -109,7 +113,7 @@ const Header = () => {
           <li>
             <Link
               to="/login"
-              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              className={`block py-2 px-4 rounded hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white transition duration-300 ${isActive("/login")}`}
             >
               Login
             </Link>
@@ -117,7 +121,7 @@ const Header = () => {
           <li>
             <Link
               to="/"
-              className="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white"
+              className={`block py-2 px-4 rounded hover:bg-gray-200 dark:hover:bg-gray-700 dark:hover:text-white transition duration-300 ${isActive("/")}`}
             >
               Logout
             </Link>

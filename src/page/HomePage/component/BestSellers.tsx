@@ -41,12 +41,12 @@ const BestSellers: React.FC = () => {
       </h3>
       <Divider />
       <div className="bg-white">
-        <div className="w-[80%] mx-auto grid grid-cols-4 gap-9">
+        <div className="w-[80%] mx-auto grid grid-cols-4 gap-9 p-5">
           {bestSellers.map(product => (
             <ProductItem 
               key={product.id} 
               product={product} 
-              categoryName={getCategoryName(product.categoryId)} // Đảm bảo product.categoryId tồn tại và đúng
+              categoryName={getCategoryName(product.categoryId)} 
             />
           ))}
         </div>

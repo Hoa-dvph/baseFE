@@ -1,143 +1,164 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { useParams } from "react-router-dom";
+
+interface Comment {
+  user: string;
+  comment: string;
+  userImage: string;
+}
 
 interface Review {
+  id: number;
   name: string;
   rating: number;
   reviews: string;
+  image: string;
+  date: string;
+  likes: number;
+  comments: Comment[];
 }
 
-interface Reviews {
-  [key: number]: number;
+interface ReviewsSummary {
+  averageRating: number;  // Điểm trung bình đánh giá của sản phẩm
+  [key: number]: number;  // Số lượng đánh giá cho từng số sao
+}
+
+interface Product {
+  id: number;
+  name: string;
+  desc: string;
+  longDesc: string;
+  price: number;
+  discount: number;
+  image: string;
+  images: string[];
 }
 
 const About: React.FC = () => {
-  const reviews: Reviews = {
-    1: 388,
-    2: 50,
-    3: 30,
-    4: 20,
-    5: 10,
-  };
+  const { id } = useParams<{ id: string }>();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviewSummary, setReviewSummary] = useState<ReviewsSummary>({
+    averageRating: 0,
+  });
 
-  const totalReviews = Object.values(reviews).reduce(
+  useEffect(() => {
+    const fetchProductAndReviews = async () => {
+      if (!id) return;
+
+      try {
+        const productResponse = await fetch(`http://localhost:3000/products/${id}`);
+        const productData = await productResponse.json();
+        setProduct(productData);
+
+        const reviewsResponse = await fetch(`http://localhost:3000/products/${id}/reviews`);
+        const reviewsData = await reviewsResponse.json();
+        setReviews(reviewsData);
+
+        const summaryResponse = await fetch(`http://localhost:3000/products/${id}/reviewSummary`);
+        const summaryData = await summaryResponse.json();
+        setReviewSummary(summaryData);
+      } catch (error) {
+        console.error("Error fetching product and reviews:", error);
+      }
+    };
+
+    fetchProductAndReviews();
+  }, [id]);
+
+  const averageRating = reviewSummary.averageRating || 0;
+  const totalReviews = Object.values(reviewSummary).reduce(
     (acc, value) => acc + value,
     0
   );
 
-  const Reviews: Review[] = [
-    { name: "", reviews: "", rating: 0 },
-    {
-      name: "Aman gupta",
-      rating: 5,
-      reviews:
-        "I've been using this cleanser for about five or six months now and my acne is almost completely gone. I really struggled for years with my skin and tried everythi possible but this is the only thing that managed to clear up my skin. 100% recommend and will continue to use is for sure.",
-    },
-    {
-      name: "Aman gupta",
-      rating: 5,
-      reviews:
-        "I've been using this cleanser for about five or six months now and my acne is almost completely gone. I really struggled for years with my skin and tried everythi possible but this is the only thing that managed to clear up my skin. 100% recommend and will continue to use is for sure.",
-    },
-    {
-      name: "Aman gupta",
-      rating: 5,
-      reviews:
-        "I've been using this cleanser for about five or six months now and my acne is almost completely gone. I really struggled for years with my skin and tried everythi possible but this is the only thing that managed to clear up my skin. 100% recommend and will continue to use is for sure.",
-    },
-  ];
-
   return (
-    <div className="flex gap-5 flex-col">
+    <div className="flex flex-col gap-5 p-5">
       <div>
-        <p className="text-lime-700 text-3xl font-normal font-['Inter']">
-          About
-        </p>
-        <p className="text-stone-600 text-xl font-light font-['Inter']">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the
+        <p className="text-lime-700 text-3xl font-normal">About</p>
+        <p className="text-stone-600 text-xl font-light mt-2">
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
           <br />
-          industry's standard dummy text ever since the 1500s, when an unknown
-          printer took a galley of
+          industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
           <br />
-          type and scrambled i
+          type and scrambled it.
         </p>
       </div>
-      <div className=" ">
-        <div className="flex items-start justify-between w-2/3">
+      {product && (
+        <div className="flex items-start justify-between w-full sm:w-2/3">
           <div className="flex gap-3 items-center">
             <img
-              src="/public/images/product/ff2.png"
-              className="w-[200px] object-fill"
-              alt=""
+              src={product.image}
+              className="w-48 object-cover rounded-lg"
+              alt={product.name}
             />
             <div>
-              <div className="flex">
-                <AiFillStar />
-                <AiFillStar />
-                <AiFillStar />
-                <AiFillStar />
-                <AiFillStar />
-              </div>
-              <div className="flex gap-2 items-center">
-                <p className="text-lime-700 text-[32.75px] font-normal font-['Istok Web']">
-                  5.0
-                </p>
-                <p>(388)</p>
-              </div>
-            </div>
-          </div>
-          <button className="bg-[#4E7C32] py-2 px-4 rounded-xl">
-            <p className="text-white text-sm font-normal font-['Istok Web']">
-              Write reviews
-            </p>
-          </button>
-        </div>
-
-        <div className="mt-4 w-2/4">
-          {Object.keys(reviews).map((star) => (
-            <div key={star} className="flex items-center my-1">
-              <div className="flex gap-2">
-                <span>{star}</span>
-                <p>★</p>
-              </div>
-              <div className="w-full bg-gray-200 h-2 ml-2 mr-2 relative">
-                <div
-                  className="bg-lime-700 h-2 absolute top-0 left-0"
-                  style={{
-                    width: `${(reviews[parseInt(star)] / totalReviews) * 100}%`,
-                  }}
-                ></div>
-              </div>
-              <span>({reviews[parseInt(star)]})</span>
-            </div>
-          ))}
-        </div>
-        <div className="grid grid-cols-2 gap-6 w-2/3 ">
-          {Reviews.map((review, index) => (
-            <div key={index} className="flex flex-col gap-2">
-              <div className="flex items-center gap-3">
-                <div className="text-lime-700 text-base font-normal text-[20px] font-['Istok Web']">
-                  {review.name}
-                </div>
-                {review.rating > 0 && (
-                  <div className="flex">
-                    {Array.from({ length: 5 }, (_, i) =>
-                      i < review.rating ? (
-                        <AiFillStar key={i} className="text-lime-700" />
-                      ) : (
-                        <AiOutlineStar key={i} className="text-lime-700" />
-                      )
-                    )}
-                  </div>
+              <div className="flex mb-2">
+                {Array.from({ length: 5 }, (_, i) =>
+                  i < Math.round(averageRating) ? (
+                    <AiFillStar key={i} className="text-yellow-400" />
+                  ) : (
+                    <AiOutlineStar key={i} className="text-yellow-400" />
+                  )
                 )}
               </div>
-              <p className="text-stone-600 text-[13.08px] font-normal font-['Istok Web']">
-                {review.reviews}
-              </p>
+              <div className="flex gap-2 items-center">
+                <p className="text-lime-700 text-3xl font-normal">
+                  {averageRating.toFixed(1)}
+                </p>
+                <p>({totalReviews})</p>
+              </div>
+              <p className="text-stone-600 text-sm mt-1">{product.desc}</p>
             </div>
-          ))}
+          </div>
+          <button className="bg-[#4E7C32] py-2 px-4 rounded-xl text-white text-sm font-normal">
+            Write reviews
+          </button>
         </div>
+      )}
+      <div className="flex flex-col gap-4 mt-4">
+        {reviews.map((review) => (
+          <div key={review.id} className="p-4 border border-gray-200 rounded-lg bg-white">
+            <div className="flex items-center gap-3 mb-2">
+              <img
+                src={review.image}
+                alt={review.name}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+              <div className="text-lime-700 text-base font-medium">
+                {review.name}
+              </div>
+              {review.rating > 0 && (
+                <div className="flex ml-auto">
+                  {Array.from({ length: 5 }, (_, i) =>
+                    i < review.rating ? (
+                      <AiFillStar key={i} className="text-yellow-400" />
+                    ) : (
+                      <AiOutlineStar key={i} className="text-yellow-400" />
+                    )
+                  )}
+                </div>
+              )}
+            </div>
+            <p className="text-stone-600 text-sm mb-2">{review.reviews}</p>
+            <div className="flex flex-col gap-3">
+              {review.comments.map((comment, index) => (
+                <div key={index} className="flex items-start gap-3">
+                  <img
+                    src={comment.userImage}
+                    alt={comment.user}
+                    className="w-10 h-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="font-semibold">{comment.user}</p>
+                    <p className="text-gray-600 text-sm">{comment.comment}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

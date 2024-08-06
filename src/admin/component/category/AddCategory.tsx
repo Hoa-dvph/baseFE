@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Modal from 'react-modal';
@@ -19,7 +20,7 @@ const customStyles = {
     maxWidth: '500px',
     padding: '20px',
     borderRadius: '8px',
-    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)'
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
   },
   overlay: {
     backgroundColor: 'rgba(0, 0, 0, 0.75)',
@@ -32,14 +33,18 @@ type AddCategoryProps = {
   onAdd: (category: Category) => void;
 };
 
+type FormData = {
+  name: string;
+  image: string;
+};
+
 const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryProps) => {
-  const [name, setName] = useState('');
+  const { register, handleSubmit, formState: { errors } } = useForm<FormData>();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const onSubmit = async (data: FormData) => {
     try {
-      const response = await axios.post('http://localhost:3000/categories', { name });
+      const response = await axios.post('http://localhost:3000/categories', data);
       onAdd(response.data);
       onClose();
       navigate('/admin/categories');
@@ -57,7 +62,7 @@ const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryProps) => {
     >
       <div className="container mx-auto p-4">
         <h2 className="text-2xl font-bold mb-4">Add New Category</h2>
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md">
+        <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 rounded-lg shadow-md">
           <div className="mb-4">
             <label htmlFor="name" className="block text-sm font-medium text-gray-700">
               Name
@@ -65,12 +70,22 @@ const AddCategoryModal = ({ isOpen, onClose, onAdd }: AddCategoryProps) => {
             <input
               type="text"
               id="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+              {...register('name', { required: 'Tên danh mục là bắt buộc', minLength: { value: 3, message: 'Tên danh mục phải có ít nhất 3 ký tự' } })}
+              className={`mt-1 block w-full px-3 py-2 border ${errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
             />
+            {errors.name && <span className="text-red-500 text-xs mt-1">{errors.name.message}</span>}
           </div>
+          <div className="mb-4">
+  <label htmlFor="image" className="block text-sm font-medium text-gray-700">Image URL</label>
+  <input
+    type="text"
+    id="image"
+    {...register('image', { required: 'URL ảnh là bắt buộc' })}
+    className={`mt-1 block w-full px-3 py-2 border ${errors.image ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+  />
+  {errors.image && <span className="text-red-500 text-xs mt-1">{errors.image.message}</span>}
+</div>
+
           <div className="flex justify-end gap-2">
             <Button variant="outlined" onClick={onClose}>
               Cancel

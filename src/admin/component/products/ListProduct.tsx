@@ -12,7 +12,7 @@ type Props = {
 const ListProduct = ({ products, handleRemove, onAdd, onEdit }: Props) => {
   return (
     <div className="container mx-auto flex flex-col gap-5 py-8">
-      <h2 className="text-2xl font-bold mb-4">Products List</h2>
+      <h2 className="text-2xl font-bold mb-4">Danh sách sản phẩm</h2>
       <Button onClick={onAdd} variant="contained" className="w-1/5">
         Thêm sản phẩm
       </Button>
@@ -24,7 +24,7 @@ const ListProduct = ({ products, handleRemove, onAdd, onEdit }: Props) => {
               <th scope="col" className="px-6 py-3">
                 Tên sản phẩm
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th scope="col" className="px-6 py-3 w-[150px]">
                 Ảnh
               </th>
               <th scope="col" className="px-6 py-3">
@@ -60,7 +60,7 @@ const ListProduct = ({ products, handleRemove, onAdd, onEdit }: Props) => {
                   <td className="px-6 py-4">
                     <img
                       src={product.image}
-                      className="w-20 h-20 object-cover"
+                      className="w-16 h-16 object-cover rounded"
                       alt={product.name}
                     />
                   </td>

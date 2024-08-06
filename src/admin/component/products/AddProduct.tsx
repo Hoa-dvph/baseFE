@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Product } from "../../../interface/Product";
 import { Category } from "../../../interface/Category";
-import { useState, useEffect } from "react";
 import { getAllCategories } from "../../../api/apiCategory";
-import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
 
 type Props = {
   onAdd: (product: Product) => void;
@@ -35,7 +34,7 @@ const AddProduct = ({ onAdd, onCancel }: Props) => {
     try {
       const newProduct = {
         ...data,
-        categoryId: Number(data.categoryId)
+        categoryId: Number(data.categoryId),
       };
       await onAdd(newProduct);
       reset();
@@ -47,7 +46,10 @@ const AddProduct = ({ onAdd, onCancel }: Props) => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="w-full mx-auto max-w-lg p-6 bg-white shadow-lg rounded-lg space-y-6">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full mx-auto max-w-lg p-6 bg-white shadow-lg rounded-lg space-y-6"
+    >
       <h2 className="text-3xl font-semibold text-gray-800 mb-6">Thêm sản phẩm</h2>
 
       <div className="space-y-4">
@@ -58,7 +60,10 @@ const AddProduct = ({ onAdd, onCancel }: Props) => {
           <input
             type="text"
             id="name"
-            {...register("name", { required: "Tên sản phẩm là bắt buộc" })}
+            {...register("name", {
+              required: "Tên sản phẩm là bắt buộc",
+              minLength: { value: 3, message: "Tên sản phẩm phải có ít nhất 3 ký tự" },
+            })}
             placeholder="Tên sản phẩm"
             className={`block w-full p-3 border ${errors.name ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
@@ -72,7 +77,13 @@ const AddProduct = ({ onAdd, onCancel }: Props) => {
           <input
             type="text"
             id="image"
-            {...register("image", { required: "Ảnh sản phẩm là bắt buộc" })}
+            {...register("image", {
+              required: "Ảnh sản phẩm là bắt buộc",
+              pattern: {
+                value: /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg))$/,
+                message: "URL ảnh sản phẩm không hợp lệ",
+              },
+            })}
             placeholder="URL ảnh sản phẩm"
             className={`block w-full p-3 border ${errors.image ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
@@ -86,7 +97,10 @@ const AddProduct = ({ onAdd, onCancel }: Props) => {
           <input
             type="text"
             id="desc"
-            {...register("desc", { required: "Mô tả sản phẩm là bắt buộc" })}
+            {...register("desc", {
+              required: "Mô tả sản phẩm là bắt buộc",
+              minLength: { value: 10, message: "Mô tả sản phẩm phải có ít nhất 10 ký tự" },
+            })}
             placeholder="Mô tả sản phẩm"
             className={`block w-full p-3 border ${errors.desc ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />
@@ -100,7 +114,10 @@ const AddProduct = ({ onAdd, onCancel }: Props) => {
           <input
             type="number"
             id="price"
-            {...register("price", { required: "Giá sản phẩm là bắt buộc", min: { value: 0, message: "Giá sản phẩm không thể âm" } })}
+            {...register("price", {
+              required: "Giá sản phẩm là bắt buộc",
+              min: { value: 0, message: "Giá sản phẩm không thể âm" },
+            })}
             placeholder="Giá sản phẩm"
             className={`block w-full p-3 border ${errors.price ? "border-red-500" : "border-gray-300"} rounded-lg bg-gray-50 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500`}
           />

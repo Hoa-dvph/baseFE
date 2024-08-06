@@ -12,15 +12,12 @@ const Kategorien = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch categories
         const categoryResponse = await fetch("http://localhost:3000/categories");
         const categoriesData: Category[] = await categoryResponse.json();
 
-        // Fetch products
         const productResponse = await fetch("http://localhost:3000/products");
         const productsData: Product[] = await productResponse.json();
 
-        // Count products per category
         const categoryProductCount: { [key: number]: number } = {};
 
         productsData.forEach((product: Product) => {
@@ -31,7 +28,6 @@ const Kategorien = () => {
           categoryProductCount[categoryId]++;
         });
 
-        // Update categories with product count
         const updatedCategories = categoriesData.map((category: Category) => ({
           ...category,
           quantity: categoryProductCount[category.id] || 0
@@ -61,11 +57,13 @@ const Kategorien = () => {
         {categories.map((category: Category) => (
           <Link to={`/category/${category.id}`} key={category.id}>
             <div className="relative rounded-xl overflow-hidden group">
-              <img
-                src={category.image}
-                alt={category.name}
-                className="w-full h-full object-cover"
-              />
+              <div className="h-60 w-full relative">
+                <img
+                  src={category.image}
+                  alt={category.name}
+                  className="w-full h-full object-cover"
+                />
+              </div>
               <div className="absolute w-[50%] top-3 right-0 text-white flex flex-col z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <p className="font-semibold text-[18px]">{category.name}</p>
                 <p className="text-[16px]">{category.quantity} items</p>

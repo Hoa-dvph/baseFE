@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Product } from '../interface/Product';
 
 interface ProductItemProps {
@@ -7,6 +8,8 @@ interface ProductItemProps {
 }
 
 const ProductItem: React.FC<ProductItemProps> = ({ product, categoryName }) => {
+  const navigate = useNavigate();
+
   if (!product || !product.image || !product.name || !product.price) {
     return <div className="text-red-500">Product data is missing.</div>;
   }
@@ -22,8 +25,12 @@ const ProductItem: React.FC<ProductItemProps> = ({ product, categoryName }) => {
     currency: 'USD',
   }).format(priceNumber);
 
+  const handleProductClick = () => {
+    navigate(`/product/${product.id}`);
+  };
+
   return (
-    <div className="flex flex-col gap-2 p-3 border">
+    <div className="flex flex-col gap-2 p-3 border" onClick={handleProductClick}>
       <div className="w-full h-auto p-3">
         <img
           src={product.image}

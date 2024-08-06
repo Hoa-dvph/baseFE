@@ -11,6 +11,10 @@ export const getAllProducts = async () => {
     throw new Error("Failed to fetch products");
   }
 };
+export const getProductsByCategory = async (category: string) => {
+  const response = await instance.get(`http://localhost:3000/products?category=${category}`);
+  return response.data;
+};
 
 // Fetch a single product by its ID
 export const getProductById = async (id: string | number) => {
@@ -45,7 +49,6 @@ export const addProduct = async (product: Product) => {
   }
 };
 
-// Update an existing product
 export const updateProduct = async (product: Product) => {
   try {
     const { data } = await instance.put(`/products/${product.id}`, product);

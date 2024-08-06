@@ -5,21 +5,46 @@ import ProductMenu from "./ProductMenu";
 import { BiSync } from "react-icons/bi";
 import { LiaShoppingBagSolid } from "react-icons/lia";
 import { FaRegHeart } from "react-icons/fa";
-import { getAllProducts } from "../../../api/apiProduct";
-const ProductFilter = () => {
-  const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+import { getAllProducts, getProductsByCategory } from "../../../api/apiProduct";
+import { getAllCategories } from "../../../api/apiCategory";
+import { Category } from "../../../interface/Category";  // Import interface Category
+import ProductItem from "../../../component/ProductItem";
 
-  const Menu = [
-    { label: "option1" },
-    { label: "option2" },
-    { label: "option3" },
-  ];
+const ProductFilter = () => {
+  const [products, setProducts] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [category, setCategory] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchInitialData = async () => {
+      try {
+        const [productsData, categoriesData] = await Promise.all([
+          getAllProducts(),
+          getAllCategories()
+        ]);
+        setProducts(productsData);
+        setCategories(categoriesData.map((cat: Category) => ({ id: cat.id, name: cat.name })));
+      } catch (error) {
+        console.error("Failed to fetch initial data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchInitialData();
+  }, []);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const productsData = await getAllProducts();
+        setLoading(true);
+        let productsData;
+        if (category) {
+          productsData = await getProductsByCategory(category);
+        } else {
+          productsData = await getAllProducts();
+        }
         setProducts(productsData);
       } catch (error) {
         console.error("Failed to fetch products:", error);
@@ -29,7 +54,7 @@ const ProductFilter = () => {
     };
 
     fetchProducts();
-  }, []);
+  }, [category]);
 
   if (loading) return <div>Loading...</div>;
 
@@ -38,54 +63,22 @@ const ProductFilter = () => {
       <div className="w-[80%] mx-auto gap-10 flex flex-col">
         <div className="flex gap-10">
           <div className="flex items-center gap-4">
-            <p>Sort By :</p>
-            <Autocomplete
-              disablePortal
-              id="combo-box-demo"
-              options={Menu}
-              size="small"
-              sx={{ width: 250 }}
-              renderInput={(params) => <TextField {...params} label="Newest" />}
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <p>Show :</p>
+            <p>Category :</p>
             <Autocomplete
               size="small"
               disablePortal
-              id="combo-box-demo"
-              options={Menu}
+              id="combo-box-category"
+              options={categories.map(cat => ({ label: cat.name, id: cat.id }))}
               sx={{ width: 250 }}
-              renderInput={(params) => <TextField {...params} label="Default" />}
+              onChange={(event, newValue) => setCategory(newValue?.label || null)}
+              renderInput={(params) => <TextField {...params} label="Select Category" />}
             />
           </div>
         </div>
         <div className="w-full flex gap-12">
           <div className="grid grid-cols-3 gap-20 w-3/4">
-            {products.map((item: any, index: number) => (
-              <div key={index} className="relative flex flex-col gap-2 group">
-                <div className="w-full">
-                  <img src={item.image} alt={item.name} className="w-full h-[250px]" />
-                </div>
-                <p className="text-zinc-800 text-[16.92px] font-bold leading-normal">
-                  {item.name}
-                </p>
-                <div className="flex gap-4 text-[#505F4E]">
-                  $ {item.price}
-                  <p className="line-through">$ {item.oldPrice}</p>
-                </div>
-                <div className="absolute inset-0 flex justify-center items-center gap-4 bg-opacity-75 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="bg-white p-2 rounded-lg text-green-700 hover:bg-green-700 hover:text-white">
-                    <BiSync className="text-xl" />
-                  </div>
-                  <div className="bg-white p-2 rounded-lg text-green-700 hover:bg-green-700 hover:text-white">
-                    <LiaShoppingBagSolid className="text-xl" />
-                  </div>
-                  <div className="bg-white p-2 rounded-lg text-green-700 hover:bg-green-700 hover:text-white">
-                    <FaRegHeart className="text-xl" />
-                  </div>
-                </div>
-              </div>
+            {products.map((item, index) => (
+              <ProductItem key={index} product={item} categoryName={category || "Uncategorized"} />
             ))}
           </div>
           <div className="w-1/4">
